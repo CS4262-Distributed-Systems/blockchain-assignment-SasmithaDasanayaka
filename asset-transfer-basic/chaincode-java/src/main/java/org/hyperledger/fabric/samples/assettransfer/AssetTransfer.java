@@ -145,6 +145,22 @@ public final class AssetTransfer implements ContractInterface {
         return newAsset;
     }
 
+     /**
+     * Duplicate the properties of an asset on the ledger.
+     *
+     * @param ctx the transaction context
+     * @param assetID the ID of the asset being duplicated
+     * @param newAsseteID the ID of the asset duplicated asset
+     * @param owner the owner of the asset being duplicated
+     * @return the duplicated asset
+     */
+    @Transaction(intent = Transaction.TYPE.SUBMIT)
+    public Asset DuplicateAsset(final Context ctx, final String assetID, final String newAsseteID, final String owner) {
+        Asset origAsset = ReadAsset(ctx, assetID);
+        return CreateAsset(ctx, newAsseteID, origAsset.getColor(), origAsset.getSize(),
+                owner, origAsset.getAppraisedValue());
+    }
+
     /**
      * Deletes asset on the ledger.
      *
